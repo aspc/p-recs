@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Recommendations | P-Recs</title>
+    {% include 'head.html' %}
+</head>
+<body>
+<div class="flex-container">
+    <div class="left-col">
+        {% include 'search.html' %}
+
+        <hr>
+
+        <div class="results">
+            <h3>Recs for {{ course }}</h3>
+
+            {% for table in tables %}
+
+            {% set buttonClass = "" %}
+
+            {% if "-HM" in table[0]  %}
+            {% set buttonClass = "button_hmc" %}
+          
+            {% elif "-CM" in table[0] %}
+            {% set buttonClass = "button_cmc" %}
+
+            {% elif "-PO" in table[0] %}
+            {% set buttonClass = "button_po" %}
+
+            {% elif "-SC" in table[0] %}
+            {% set buttonClass = "button_sc" %}
+
+            {% elif "-PZ" in table[0] %}
+            {% set buttonClass = "button_pz" %}
+
+            {% else %}
+            {% set buttonClass = "button_else" %}
+            
+            {% endif %}
+
+            <div class="course-rec">
+                <button type="button" id = "parent" class="collapsible button {{ buttonClass }}">
+
+                    
+                    <div class = "{{ buttonClass }}"> 
+                        <p class="uppercase-title"> {{ table[0] }} </p>
+                    </div>
+
+                  
+                
+                    <p> {{ table[2].title }} </p>
+
+              
+                    <p style="font-size: 12px; opacity: 0.6; margin-top: 4px;">similarity: {{ table[1] }}</p>
+                    <p style="opacity: 0.5; margin-top: 4px; line-height: 10px" class="arrow"><i class="fa-solid fa-caret-down"></i></p>
+                </button>
+                <!-- <h4>{{ table[2].title }}</h4> -->
+                <div class="content">
+                    <p class="uppercase-title">Description</p>
+                    <p>{{ table[2].description }}</p>
+                    <hr style="margin: 16px 0">
+                    <p class="uppercase-title">
+                        Prerequisites
+                    </p>
+                    <p>{% if table[2].prerequisites %}{{ table[2].prerequisites }}{% else %}None{% endif %}</p>
+                </div>
+
+                <!-- <button onClick="">Add to favorites</button> -->
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="right-col">
+      	<!-- <p>Visualization of courses coming soon (real WIP screenshot)</p> -->
+		<p> Favorites</p>
+    </div>
+</div>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+          const isActive = this.classList.contains("active");
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+        this.getElementsByClassName("arrow")[0].innerHTML = isActive ? "<i class=\"fa-solid fa-caret-down\"></i>" : "<i class=\"fa-solid fa-caret-up\"></i>";
+      });
+    }
+</script>
+    
+
+</body>
+</html>
