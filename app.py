@@ -7,9 +7,31 @@ import pickle
 from scipy import spatial
 import os 
 import json
+from cryptography.fernet import Fernet
+import config 
 # from recommend_GloVe.recommend_GloVe_average import recommend
 
 app = Flask(__name__)
+
+configuration = config.Config('keys.py')
+
+def decrypt_csv(file_name):
+	fernet = Fernet(configuration["csv_encryption_key"])
+	
+	with open(file_name, 'rb') as enc_file:
+		encrypted = enc_file.read()
+	
+	decrypted = fernet.decrypt(encrypted)
+ 
+	new_file_name = file_name.replace('encrypted', 'decrypted')
+	
+	with open(new_file_name, 'wb') as dec_file:
+		dec_file.write(decrypted)
+  
+# decrypt_files
+for file_name in ['data/encrypted_all_courses.csv', 'data/encrypted_courses.csv']:
+    decrypt_csv(file_name)
+
 
 @app.route('/')
 def index():
