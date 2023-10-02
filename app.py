@@ -13,7 +13,7 @@ import config
 
 app = Flask(__name__)
 
-configuration = config.Config('util.py')
+configuration = config.Config('keys.py')
 
 def decrypt_csv(file_name):
 	fernet = Fernet(configuration["csv_encryption_key"])

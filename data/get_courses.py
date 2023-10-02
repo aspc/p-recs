@@ -4,7 +4,7 @@ import pandas as pd
 from cryptography.fernet import Fernet
 import config
 
-configuration = config.Config('util.py')
+configuration = config.Config('keys.py')
 
 # Creates list of all course areas offered at the 5Cs
 course_areas = requests.get(f'http://jicsweb.pomona.edu/api/courseareas')

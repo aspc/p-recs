@@ -1,7 +1,7 @@
 
 .DS_Store
 *.pyc
-util.py
+keys.py
 decrypted*
 all_courses.csv
 courses.csv
