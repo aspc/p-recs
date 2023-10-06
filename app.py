@@ -50,24 +50,5 @@ def getvalue():
 		error = "Invalid Course ID. Please Try Again"
 		return render_template('index.html', error = error) 
 
-@app.route('/search', methods=['POST'])
-def search():
-	term = request.form['q']
-	print ('term: ', term)
-	
-	SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-	json_url = os.path.join(SITE_ROOT, "data", "newresults.json")
-	json_data = json.loads(open(json_url).read())
-	#print (json_data)
-	#print (json_data[0])
-
-	filtered_dict = [v for v in json_data if term.lower() in v.lower()]
-	# print(filtered_dict)
-	
-	resp = jsonify(filtered_dict)
-	resp.status_code = 200
-	print(resp)
-	return resp
-
 if __name__ == '__main__':
     app.run(debug=True)
