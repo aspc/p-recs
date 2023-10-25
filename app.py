@@ -10,9 +10,8 @@ from data.encryption import decrypt_file
 app = Flask(__name__)
   
 # decrypt_files
-for file_name in ['data/encrypted_all_courses.csv', 'data/encrypted_courses.csv']:
+for file_name in ['data/encrypted_all_courses.csv', 'data/encrypted_courses.csv', 'data/encrypted_vectors_all_attributes.pkl']:
     decrypt_file(file_name)
-decrypt_file("data/encrypted_vectors_all_attributes.pkl")
 
 with open("data/decrypted_vectors_all_attributes.pkl", "rb") as handle:
     vector_courses = pickle.load(handle)
