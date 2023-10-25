@@ -12,25 +12,26 @@
         <hr>
 
         <div class="results">
-            <h3>Recs for {{ course }}</h3>
+            <h3>Recs for <i> {{ query }} </i></h3>
 
-            {% for table in tables %}
+            {% for row in tables.iterrows() %}
+            {% set table = row[1] %}
 
             {% set buttonClass = "" %}
 
-            {% if "-HM" in table[0]  %}
+            {% if "HM" in table['CourseCode']  %}
             {% set buttonClass = "button_hmc" %}
           
-            {% elif "-CM" in table[0] %}
+            {% elif "CM" in table['CourseCode'] %}
             {% set buttonClass = "button_cmc" %}
 
-            {% elif "-PO" in table[0] %}
+            {% elif "PO" in table['CourseCode'] %}
             {% set buttonClass = "button_po" %}
 
-            {% elif "-SC" in table[0] %}
+            {% elif "SC" in table['CourseCode'] %}
             {% set buttonClass = "button_sc" %}
 
-            {% elif "-PZ" in table[0] %}
+            {% elif "PZ" in table['CourseCode'] %}
             {% set buttonClass = "button_pz" %}
 
             {% else %}
@@ -43,26 +44,23 @@
 
                     
                     <div class = "{{ buttonClass }}"> 
-                        <p class="uppercase-title"> {{ table[0] }} </p>
+                        <p class="uppercase-title"> {{ table['CourseCode'] }} </p>
                     </div>
 
-                  
-                
-                    <p> {{ table[2].title }} </p>
+                    <p> {{ table['Name'] }} </p>
 
-              
-                    <p style="font-size: 12px; opacity: 0.6; margin-top: 4px;">similarity: {{ table[1] }}</p>
+                    <p style="font-size: 12px; opacity: 0.6; margin-top: 4px;">similarity: {{ table['similarity'] }}</p>
                     <p style="opacity: 0.5; margin-top: 4px; line-height: 10px" class="arrow"><i class="fa-solid fa-caret-down"></i></p>
                 </button>
                 <!-- <h4>{{ table[2].title }}</h4> -->
                 <div class="content">
                     <p class="uppercase-title">Description</p>
-                    <p>{{ table[2].description }}</p>
+                    <p>{{ table['Description'] }}</p>
                     <hr style="margin: 16px 0">
                     <p class="uppercase-title">
                         Prerequisites
                     </p>
-                    <p>{% if table[2].prerequisites %}{{ table[2].prerequisites }}{% else %}None{% endif %}</p>
+                    <p>{% if table['Prereqs'] %}{{ table['Prereqs'] }}{% else %}None{% endif %}</p>
                 </div>
 
                 <!-- <button onClick="">Add to favorites</button> -->
