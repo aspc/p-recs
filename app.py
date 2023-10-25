@@ -4,34 +4,18 @@
 from flask import Flask, jsonify, request, redirect, render_template, flash
 import pandas as pd 
 import pickle
-from scipy import spatial
-import os 
-import json
-from cryptography.fernet import Fernet
-import config 
-# from recommend_GloVe.recommend_GloVe_average import recommend
+from data.get_recs import recommend_courses
+from data.encryption import decrypt_file
 
 app = Flask(__name__)
-
-configuration = config.Config('keys.py')
-
-def decrypt_csv(file_name):
-	fernet = Fernet(configuration["csv_encryption_key"])
-	
-	with open(file_name, 'rb') as enc_file:
-		encrypted = enc_file.read()
-	
-	decrypted = fernet.decrypt(encrypted)
- 
-	new_file_name = file_name.replace('encrypted', 'decrypted')
-	
-	with open(new_file_name, 'wb') as dec_file:
-		dec_file.write(decrypted)
   
 # decrypt_files
 for file_name in ['data/encrypted_all_courses.csv', 'data/encrypted_courses.csv']:
-    decrypt_csv(file_name)
+    decrypt_file(file_name)
+decrypt_file("data/encrypted_vectors_all_attributes.pkl")
 
+with open("data/decrypted_vectors_all_attributes.pkl", "rb") as handle:
+    vector_courses = pickle.load(handle)
 
 @app.route('/')
 def index():
@@ -40,12 +24,13 @@ def index():
 @app.route('/rec',methods=['POST'])
 def getvalue():
 	try:
-		coursename = request.form['search'].split(" ")[0]
-		lowlvl = 'lowlvl' in request.form
-		dept_filter = 'dept_filter' in request.form
-		df = []
+		query = request.form['search']
+		# TODO: change filters
+		# lowlvl = 'lowlvl' in request.form
+		# dept_filter = 'dept_filter' in request.form
+		df = recommend_courses(query, vector_courses)
 
-		return render_template('result.html', tables = df, course = coursename)
+		return render_template('result.html', tables = df, query = query)
 	except Exception as e:
 		error = "Invalid Course ID. Please Try Again"
 		return render_template('index.html', error = error) 

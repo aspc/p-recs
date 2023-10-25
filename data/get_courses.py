@@ -1,8 +1,8 @@
 import requests
 import csv
 import pandas as pd
-from cryptography.fernet import Fernet
 import config
+from encryption import encrypt_file
 
 configuration = config.Config('keys.py')
 
@@ -103,20 +103,7 @@ for idx, row in duplicates.groupby('CourseCode')['CourseArea']:
 
 df.drop('CourseArea', axis=1, inplace=True)
 df.to_csv('data/courses.csv', index=False)
-
-
-def encrypt_csv(file_name, encrypted_file_name):
-    
-    fernet = Fernet(configuration["csv_encryption_key"])
-    
-    with open(file_name, 'rb') as file:
-        original = file.read()
-    
-    encrypted = fernet.encrypt(original)
-    
-    with open(encrypted_file_name, 'wb') as encrypted_file:
-        encrypted_file.write(encrypted)
     
 for file_name, encrypted_file_name in [('data/courses.csv','data/encrypted_courses.csv'),('data/all_courses.csv','data/encrypted_all_courses.csv')]:
-    encrypt_csv(file_name, encrypted_file_name)
+    encrypt_file(file_name, encrypted_file_name)
 
