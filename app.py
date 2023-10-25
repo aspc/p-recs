@@ -31,7 +31,7 @@ def getvalue():
 
 		return render_template('result.html', tables = df, query = query)
 	except Exception as e:
-		error = "Invalid Course ID. Please Try Again"
+		error = "We are temporarily unable to process your request. Please contact product@aspc.pomona.edu."
 		return render_template('index.html', error = error) 
 
 if __name__ == '__main__':
