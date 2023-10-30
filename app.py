@@ -1,6 +1,7 @@
 
 # render_template -  api uses to generate html 
 # request - object we need for forms 
+# import csv
 from flask import Flask, jsonify, request, redirect, render_template, flash
 import pandas as pd 
 import pickle
@@ -15,9 +16,10 @@ for file_name in ['data/encrypted_all_courses.csv', 'data/encrypted_courses.csv'
 
 with open("data/decrypted_vectors_all_attributes.pkl", "rb") as handle:
     vector_courses = pickle.load(handle)
-    
+
+
 with open("data/decrypted_all_courses.csv", "r") as handle:
-    all_courses = csv.load(handle)
+    all_courses = pd.read_csv(handle)
 
 @app.route('/')
 def index():
@@ -28,16 +30,16 @@ def getvalue():
 	try:
 		query = request.form['search']
 		# TODO: change filters
-		course_area = 'department' in request.form
+		course_area = request.form['department']
+		print(course_area)
 		
-		selected_days = request.form.getlist('days') # fix string     
+		selected_days = request.form.getlist('days')  
+		print(selected_days)  # return a list of days
+		campus_list = request.form.getlist('campus')    
 
-		campus_list = request.form.getlist('campus')  # fix string    
-
+		print(campus_list) # return a list of campuses
 		filter_df = filter_attributes(all_courses, vector_courses, course_area, campus_list, selected_days)
-		result_df = recommend_courses(query, filter_df)
-
-		return render_template('result.html', tables = result_df, query = query)
+		result_df = recommend_courses(query, filter_df)	
 	except Exception as e:
 		error = "We are temporarily unable to process your request. Please contact product@aspc.pomona.edu."
 		return render_template('index.html', error = error) 
