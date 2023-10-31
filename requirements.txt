@@ -19,3 +19,4 @@ Werkzeug==2.2.2
 openai==0.28.1
 matplotlib==3.8.0
 plotly==5.18.0
+pyqt5==5.15.10
