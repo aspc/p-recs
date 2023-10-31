@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Favorites</title>
+    </head>
+    <body> 
+        <div class="favorites-section" style="margin-top: 20px;">
+            <h3 style="font-size: 18px; margin-bottom: 10px;">Favorites</h3>
+            <ul id="favorites-list" style="list-style: none; padding: 0;">
+                <!-- Favorite courses will be displayed here -->
+            </ul>
+        </div>
+    </body>
+    <script>
+        checkSemester('{{ current_semester }}')
+        const favoritesList = document.getElementById('favorites-list');
+        var favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        var favoritesSet = new Set(favorites);
+        displayFavoriteCourses();
+        
+        // ------------------------------------ HELPER FUNCTIONS ------------------------------------
+
+        // clears local storage favorites if semester changes
+        function checkSemester(currentSemester) {
+            const savedSemester = localStorage.getItem('semester') || '';
+            if (savedSemester !== currentSemester) {
+                localStorage.setItem('semester', currentSemester);
+                localStorage.setItem('favorites', '[]');
+            }
+        }
+
+        function displayFavoriteCourses() {
+            // Iterate through the favorite courses
+            for (const courseId of favorites) {
+                console.log('rendering', courseId);
+                renderFavorite(courseId);
+            }
+        }
+
+        function renderFavorite(courseId) {
+            console.log(courseId)
+            const li = document.createElement('li');
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.addEventListener('click', () => removeFromFavorites(courseId));
+            li.textContent = courseId;
+            li.appendChild(removeButton);
+            li.setAttribute('course-id', courseId);
+            favoritesList.appendChild(li);
+        }
+
+        function removeFromFavorites(courseId) {
+            const index = favorites.indexOf(courseId);
+            if (index !== -1) {
+                favoritesSet.delete(courseId);
+                favorites.splice(index, 1);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+        
+                // Remove course from rendered list
+                const liToRemove = favoritesList.querySelector(`li[course-id="${courseId}"]`);
+                if (liToRemove) {
+                    liToRemove.remove();
+                }
+            }
+        }
+
+        function addToFavorites(courseId) {
+            if (!favoritesSet.has(courseId)) {
+                favorites.push(courseId);
+                favoritesSet.add(courseId)
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                renderFavorite(courseId);
+            }
+        }
+
+    </script>
+</html>

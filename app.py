@@ -20,7 +20,7 @@ with open("data/decrypted_vectors_all_attributes.pkl", "rb") as handle:
 
 @app.route('/')
 def index():
-    return render_template('index.html') 
+    return render_template('index.html', current_semester = current_semester) 
 
 @app.route('/rec',methods=['POST'])
 def getvalue():
