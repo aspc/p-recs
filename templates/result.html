@@ -40,7 +40,7 @@
             {% endif %}
 
             <div class="course-rec">
-                <button onclick="addToFavorites('{{ table['CourseCode'] }}')" style="color: red;";>&#9825; Favorite</button>
+                <button onclick="addToFavorites('{{ table['CourseCode'] }}', '{{ table['Name'] }}', '{{ table['Description'] }}', '{{ table['Prereqs'] }}')" style="color: red;";>&#9825; Favorite</button>
                 <button type="button" id = "parent" class="collapsible button {{ buttonClass }}">
                     
                     <div class = "{{ buttonClass }}"> 

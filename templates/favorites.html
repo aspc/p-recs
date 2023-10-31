@@ -60,9 +60,10 @@
             }
         }
 
-        function addToFavorites(courseId, table) {
+        function addToFavorites(courseId, courseName, description, prereqs) {
             if (!favorites.has(courseId)) {
-                favorites.set(courseId, "data":courseId)
+                // TODO: save full course info and render it
+                favorites.set(courseId, {"data":courseName})
                 localStorage.setItem('favorites', JSON.stringify(Object.fromEntries(favorites)));
                 renderFavorite(courseId);
             }
