@@ -14,8 +14,7 @@
     <script>
         checkSemester('{{ current_semester }}')
         const favoritesList = document.getElementById('favorites-list');
-        var favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-        var favoritesSet = new Set(favorites);
+        var favorites = new Map(Object.entries(JSON.parse(localStorage.getItem('favorites') || '{}')));
         displayFavoriteCourses();
         
         // ------------------------------------ HELPER FUNCTIONS ------------------------------------
@@ -25,16 +24,15 @@
             const savedSemester = localStorage.getItem('semester') || '';
             if (savedSemester !== currentSemester) {
                 localStorage.setItem('semester', currentSemester);
-                localStorage.setItem('favorites', '[]');
+                localStorage.setItem('favorites', '{}');
             }
         }
 
         function displayFavoriteCourses() {
             // Iterate through the favorite courses
-            for (const courseId of favorites) {
-                console.log('rendering', courseId);
-                renderFavorite(courseId);
-            }
+            favorites.forEach (function(value, key) {
+                renderFavorite(key);
+            });
         }
 
         function renderFavorite(courseId) {
@@ -50,10 +48,8 @@
         }
 
         function removeFromFavorites(courseId) {
-            const index = favorites.indexOf(courseId);
-            if (index !== -1) {
-                favoritesSet.delete(courseId);
-                favorites.splice(index, 1);
+            if (favorites.has(courseId)) {
+                favorites.delete(courseId)
                 localStorage.setItem('favorites', JSON.stringify(favorites));
         
                 // Remove course from rendered list
@@ -64,11 +60,10 @@
             }
         }
 
-        function addToFavorites(courseId) {
-            if (!favoritesSet.has(courseId)) {
-                favorites.push(courseId);
-                favoritesSet.add(courseId)
-                localStorage.setItem('favorites', JSON.stringify(favorites));
+        function addToFavorites(courseId, table) {
+            if (!favorites.has(courseId)) {
+                favorites.set(courseId, "data":courseId)
+                localStorage.setItem('favorites', JSON.stringify(Object.fromEntries(favorites)));
                 renderFavorite(courseId);
             }
         }
