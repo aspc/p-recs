@@ -2,7 +2,6 @@ import numpy as np
 from numpy import dot
 from numpy.linalg import norm
 import pandas as pd
-import pickle
 import openai
 from openai.embeddings_utils import get_embedding, cosine_similarity
 import os 

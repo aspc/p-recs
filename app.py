@@ -3,7 +3,6 @@
 # request - object we need for forms 
 from flask import Flask, jsonify, request, redirect, render_template, flash
 import pandas as pd 
-import pickle
 from data.get_recs import recommend_courses
 from data.encryption import decrypt_file
 
@@ -14,7 +13,7 @@ for file_name in ['data/encrypted_all_courses.csv', 'data/encrypted_courses.csv'
     decrypt_file(file_name)
 
 with open("data/decrypted_vectors_all_attributes.pkl", "rb") as handle:
-    vector_courses = pickle.load(handle)
+    vector_courses = pd.read_pickle(handle)
 
 @app.route('/')
 def index():

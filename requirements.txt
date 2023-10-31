@@ -14,4 +14,3 @@ Werkzeug
 openai
 matplotlib
 plotly
-pickle
