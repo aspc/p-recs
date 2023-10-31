@@ -5,10 +5,10 @@ import pandas as pd
 import pickle
 import openai
 from openai.embeddings_utils import get_embedding, cosine_similarity
-import config 
+import os 
 
-configuration = config.Config('keys.py')
-openai.api_key = configuration["openai_api_key"]
+openai_api_key = os.environ.get("openai_api_key")
+openai.api_key = openai_api_key
 
 def get_embedding(list_str):
     
@@ -22,7 +22,6 @@ def get_embedding(list_str):
     embedding = response["data"]
     
     return embedding[0]['embedding']
-
 
 def recommend_courses(query, courses_df, number_of_courses=10):
     # Get the embeddings of the query string
