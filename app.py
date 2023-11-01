@@ -1,7 +1,7 @@
 
 # render_template -  api uses to generate html 
 # request - object we need for forms 
-# import csv
+
 from flask import Flask, jsonify, request, redirect, render_template, flash
 import pandas as pd 
 import pickle
@@ -14,8 +14,8 @@ app = Flask(__name__)
 for file_name in ['data/encrypted_all_courses.csv', 'data/encrypted_courses.csv', 'data/encrypted_vectors_all_attributes.pkl']:
     decrypt_file(file_name)
 
-vector_courses = pd.read_pickle("data/vectors_all_SP24_courses.pkl")
 
+vector_courses = pd.read_pickle("data/vectors_all_SP24_courses.pkl")
 
 @app.route('/')
 def index():
