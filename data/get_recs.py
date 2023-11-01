@@ -11,28 +11,53 @@ configuration = config.Config('keys.py')
 openai.api_key = configuration["openai_api_key"]
 
 
+# note: all_courses is same df as courses_df
+def filter_course_area(all_courses, course_area = [], campus_list = [], selected_days = [], faculty_list = []):
 
-def filter_attributes(all_courses, courses_df, course_area, campus_list, selected_days):
-    # def filter_course_area(course_area):
-    #     return all_courses['CourseArea'] == course_area
-
-    # def filter_campus(campus_list):
-    #     all_courses['Campus'].isin(campus_list)
-    campus_list = campus_list
-    course_area = course_area
-
-    def filter_days(selected_days):
-        all_courses["Weekdays_Str"] = all_courses.Weekdays.apply(lambda a: "".join(a))
-
-        selected_days_set = set(selected_days)  
-        filtered_courses = all_courses[all_courses["Weekdays_Str"].apply(lambda weekdays: set(weekdays).issubset(selected_days_set))]
-        return filter_days
+    course_area = [course_area]
     
-    all_courses = filter_days(all_courses)
-    filter_courses = all_courses.query("Campus in @campus_list and CourseArea in @course_area")
-    course_recs = filter_courses["CourseCode"].unique().tolist()
+    # if no filtering is needed
+    if (len(course_area) == 0) & (len(campus_list) == 0) & (len(selected_days) == 0) & (len(faculty_list) == 0):
+        return all_courses
 
-    return courses_df.query('CourseCode == @course_recs')
+    filtered_courses = all_courses
+
+    # fiter by department
+    if len(course_area) > 0: 
+        selected_areas_set = set(course_area)  
+        # we want the query to be a subset of entries
+        filtered_courses =  filtered_courses[filtered_courses["CourseArea"].apply(lambda x: selected_areas_set.issubset(x))]
+
+    # filter selected days
+    if len(selected_days) > 0: 
+        selected_days = set(selected_days)
+
+        # get rid of empty sets
+        filtered_courses = filtered_courses[filtered_courses["Weekdays"].apply(lambda x: bool(x))]
+
+        # we want the entry to be a subset of query entered
+        filtered_courses = filtered_courses[filtered_courses["Weekdays"].apply(lambda x: x.issubset(selected_days))]
+
+    # filter campus
+    if len(campus_list) > 0:
+        selected_campus = set(campus_list)
+
+        # get rid of empty sets
+        filtered_courses = filtered_courses[filtered_courses["Campus"].apply(lambda x: bool(x))]
+
+        # we want entry to be a subset of query entered
+        filtered_courses = filtered_courses[filtered_courses["Campus"].apply(lambda x: x.issubset(selected_campus))]
+
+    if len(faculty_list) > 0:
+        selected_faculty = set(faculty_list)
+
+        # get rid of empty sets
+        filtered_courses = filtered_courses[filtered_courses["Faculty"].apply(lambda x: bool(x))]
+
+        # we want the query to be a subset of entries
+        filtered_courses = filtered_courses[filtered_courses["Faculty"].apply(lambda x: x.issubset(selected_faculty))]
+
+    return filtered_courses
 
 
 def get_embedding(list_str):
@@ -48,12 +73,18 @@ def get_embedding(list_str):
     
     return embedding[0]['embedding']
 
-def recommend_courses(query, courses_df, number_of_courses=10):
+def recommend_courses(query, courses_df, course_area = [], campus_list = [], selected_days = [], faculty_list = [], number_of_courses=10):
     # Get the embeddings of the query string
+
+    courses_df = filter_course_area(courses_df, course_area, campus_list, selected_days, faculty_list)
+    
+    if query is None:
+        return courses_df.head(10)
+
     query_embedding = get_embedding(query)
 
     # calculate the similarity between thr query_embedding and the courses_df['vector] column
-    courses_df['similarity'] = courses_df['vector'].apply(lambda x: cosine_similarity(query_embedding, x))
+    courses_df['similarity'] = courses_df['vectors'].apply(lambda x: cosine_similarity(query_embedding, x))
     
     # Sort the courses by similarity and return the top 5
     recommended_courses = courses_df.sort_values('similarity', ascending=False).head(number_of_courses)

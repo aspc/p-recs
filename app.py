@@ -5,7 +5,7 @@
 from flask import Flask, jsonify, request, redirect, render_template, flash
 import pandas as pd 
 import pickle
-from data.get_recs import recommend_courses, filter_attributes
+from data.get_recs import recommend_courses, filter_course_area
 from data.encryption import decrypt_file
 
 app = Flask(__name__)
@@ -14,12 +14,8 @@ app = Flask(__name__)
 for file_name in ['data/encrypted_all_courses.csv', 'data/encrypted_courses.csv', 'data/encrypted_vectors_all_attributes.pkl']:
     decrypt_file(file_name)
 
-with open("data/decrypted_vectors_all_attributes.pkl", "rb") as handle:
-    vector_courses = pickle.load(handle)
+vector_courses = pd.read_pickle("data/vectors_all_SP24_courses.pkl")
 
-
-with open("data/decrypted_all_courses.csv", "r") as handle:
-    all_courses = pd.read_csv(handle)
 
 @app.route('/')
 def index():
@@ -29,6 +25,8 @@ def index():
 def getvalue():
 	try:
 		query = request.form['search']
+		print(query)
+                
 		# TODO: change filters
 		course_area = request.form['department']
 		print(course_area)
@@ -38,11 +36,16 @@ def getvalue():
 		campus_list = request.form.getlist('campus')    
 
 		print(campus_list) # return a list of campuses
-		filter_df = filter_attributes(all_courses, vector_courses, course_area, campus_list, selected_days)
-		result_df = recommend_courses(query, filter_df)	
+
+		result_df = recommend_courses(query, courses_df = vector_courses,
+									 course_area=course_area,
+									 campus_list= campus_list, selected_days=selected_days)
+                
+		return render_template('result.html', tables = result_df, query = query)
+
 	except Exception as e:
 		error = "We are temporarily unable to process your request. Please contact product@aspc.pomona.edu."
-		return render_template('index.html', error = error) 
+		return render_template('index.html',  error = error) 
 
 if __name__ == '__main__':
     app.run(debug=True)
