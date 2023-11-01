@@ -58,6 +58,16 @@
                     <p>{{ table['Description'] }}</p>
                     <hr style="margin: 16px 0">
                     <p class="uppercase-title">
+                        Instructor(s)
+                    </p>
+                    <p>{{ table['Faculty'] }}</p>
+                    <hr style="margin: 16px 0">
+                    <p class="uppercase-title">
+                        Schedule
+                    </p>
+                    <p style="white-space: pre-line">{{ table['Schedule']}}</p>
+                    <hr style="margin: 16px 0">
+                    <p class="uppercase-title">
                         Prerequisites
                     </p>
                     <p>{% if table['Prereqs'] %}{{ table['Prereqs'] }}{% else %}None{% endif %}</p>
