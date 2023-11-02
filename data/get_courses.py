@@ -1,11 +1,11 @@
 import requests
 import csv
 import pandas as pd
-import config
+import os
 from encryption import encrypt_file
 from app import current_semester
 
-configuration = config.Config('keys.py')
+api_key = os.environ.get("api_key")
 
 # Creates list of all course areas offered at the 5Cs
 course_areas = requests.get(f'http://jicsweb.pomona.edu/api/courseareas')
@@ -16,7 +16,7 @@ for area_codes in course_areas.json():
 # Generates url for all valid course areas of this semester and returns json
 def get_area_course_info(code):
     payload = {}
-    payload["api_key"] = configuration["api_key"]
+    payload["api_key"] = api_key
     api_url = "https://jicsweb.pomona.edu/api/Courses/"+ current_semester + code
     r = requests.get(
         api_url, params=payload)
