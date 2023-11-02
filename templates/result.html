@@ -40,23 +40,33 @@
             {% endif %}
 
             <div class="course-rec">
+                <button class="favorite-button" data-course-code="{{ table['CourseCode'] }}" data-course-name="{{ table['Name'] }}" data-description="{{ table['Description'] }}" data-prereqs="{{ table['Prereqs'] }}" data-schedule="{{ table['Schedule'] }}" data-instructor="{{ table['Faculty'] }}" style="color: red;">&#9825; Favorite</button>
                 <button type="button" id = "parent" class="collapsible button {{ buttonClass }}">
-
                     
                     <div class = "{{ buttonClass }}"> 
                         <p class="uppercase-title"> {{ table['CourseCode'] }} </p>
                     </div>
 
-                    <p> {{ table['Name'] }} </p>
+                    <p style="margin-top: 6px; margin-bottom: 6px; font-size:16px"> {{ table['Name'] }} </p>
 
-                    <p style="font-size: 12px; opacity: 0.6; margin-top: 4px;">similarity: {{ table['similarity'] }}</p>
-                    <p style="opacity: 0.5; margin-top: 4px; line-height: 10px" class="arrow"><i class="fa-solid fa-caret-down"></i></p>
+                    <p style="font-size: 12px; opacity: 0.6; margin-top: 2px; margin-bottom: 6px">similarity: {{ table['similarity'] }}</p>
+                    <p style="opacity: 0.5; margin-top: 2px; line-height: 10px" class="arrow"><i class="fa-solid fa-caret-down"></i></p>
                 </button>
                 <!-- <h4>{{ table[2].title }}</h4> -->
                 <div class="content">
                     <p class="uppercase-title">Description</p>
                     <p>{{ table['Description'] }}</p>
-                    <hr style="margin: 16px 0">
+                    <hr style="margin: 10px 0">
+                    <p class="uppercase-title">
+                        Instructor(s)
+                    </p>
+                    <p>{{ table['Faculty'] }}</p>
+                    <hr style="margin: 10px 0">
+                    <p class="uppercase-title">
+                        Schedule
+                    </p>
+                    <p style="white-space: pre-line">{{ table['Schedule']}}</p>
+                    <hr style="margin: 10px 0">
                     <p class="uppercase-title">
                         Prerequisites
                     </p>
@@ -69,12 +79,28 @@
         </div>
     </div>
     <div class="right-col">
-      	<!-- <p>Visualization of courses coming soon (real WIP screenshot)</p> -->
-		<p> Favorites</p>
+        {% set current_semester = current_semester %}
+        {% include 'favorites.html' %}
     </div>
 </div>
 
 <script>
+    // Add a click event listener for all buttons with the "favorite-button" class
+    document.querySelectorAll('.favorite-button').forEach(function(button) {
+        button.addEventListener('click', function() {
+            // Retrieve data from the data attributes
+            const courseCode = button.getAttribute('data-course-code');
+            const courseName = button.getAttribute('data-course-name');
+            const description = button.getAttribute('data-description');
+            const prereqs = button.getAttribute('data-prereqs');
+            const schedule = button.getAttribute('data-schedule');
+            const instructor = button.getAttribute('data-instructor');
+
+            // Call the addToFavorites function with the retrieved data
+            addToFavorites(courseCode, courseName, description, prereqs, schedule, instructor);
+        });
+    });
+
     var coll = document.getElementsByClassName("collapsible");
     var i;
     
@@ -91,6 +117,7 @@
         this.getElementsByClassName("arrow")[0].innerHTML = isActive ? "<i class=\"fa-solid fa-caret-down\"></i>" : "<i class=\"fa-solid fa-caret-up\"></i>";
       });
     }
+
 </script>
     
 

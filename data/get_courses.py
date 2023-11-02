@@ -3,6 +3,7 @@ import csv
 import pandas as pd
 import os
 from encryption import encrypt_file
+from app import current_semester
 
 api_key = os.environ.get("api_key")
 
@@ -16,7 +17,7 @@ for area_codes in course_areas.json():
 def get_area_course_info(code):
     payload = {}
     payload["api_key"] = api_key
-    api_url = "https://jicsweb.pomona.edu/api/Courses/2024;SP/" + code
+    api_url = "https://jicsweb.pomona.edu/api/Courses/"+ current_semester + code
     r = requests.get(
         api_url, params=payload)
     if r.status_code != 200:
