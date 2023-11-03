@@ -1,5 +1,5 @@
 body {
-	font-family: "IBM Plex Sans", sans-serif;
+	font-family: "Karla", sans-serif;
 	margin: 0;
 }
 
@@ -35,7 +35,8 @@ h1 {
 	justify-content: flex-start;
 	align-items: stretch;
 	text-align: left;
-	padding: 16px 16px;
+	padding: 16px;
+	box-sizing: border-box;
 }
 
 .checkboxes input[type="checkbox"] {
@@ -55,7 +56,7 @@ h1 {
 	.left-col {
 		width: 70%;
 		height: 100%;
-		border-right: 1px solid black;
+		border-right: 1px solid #DBDBDB;
 		flex-grow: 0;
 		flex-shrink: 0;
 		box-sizing: border-box;
@@ -65,6 +66,8 @@ h1 {
 
 hr {
 	margin: 32px 0;
+	border-color: #DBDBDB;
+	border-top: #DBDBDB
 }
 
 input {
@@ -74,11 +77,11 @@ input {
 	box-sizing: border-box;
 	display: block;
 	margin: 8px 0;
-	font-family: "IBM Plex Sans", sans-serif;
+	font-family: "Karla", sans-serif;
 }
 
 input[type="submit"] {
-	background-color: red;
+	background-color: #3298DB;
 	border: 0;
 	color: white;
 	opacity: 0.75;
@@ -135,7 +138,7 @@ input[type="submit"]:hover {
   padding: 12px 8px;
   text-align: center;
   font-size: 12px;
-	font-family: "IBM Plex Sans", sans-serif;
+	font-family: "Karla", sans-serif;
 }
 
 
@@ -166,6 +169,30 @@ input[type="submit"]:hover {
 .button:hover {
 	opacity: 0.9;}
 
+.remove-button {
+	background-color: transparent;
+	border: 1px solid #EEEEEE;
+	padding: 1px 3px; 
+	transition: background-color 0.3s;
+
+	&:hover {
+	color: #3298DB; /* Change text color on hover */
+	}
+}
+
+.favorite-button {
+	cursor: pointer;
+	background-color: transparent;
+	border: 1px solid #EEEEEE; 
+	padding: 1px 3px; 
+	transition: background-color 0.3s; 
+	display: inline-block;
+
+	&:hover {
+	color: #3298DB; /* Change text color on hover */
+	}
+}
+
 .uppercase-title {
 	font-weight: 700;
 	text-transform: uppercase;
@@ -173,4 +200,35 @@ input[type="submit"]:hover {
 	font-size: 12px;
 	margin-bottom: 2px;
 	margin-top: 0
+}
+
+/* Footer styling */
+.footer {
+	background-color: #FAFAFA;
+	color: #717171;
+	padding: 1rem;
+	font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.right-footer a {
+    color: initial; 
+    text-decoration: none;
+    transition: color 0.3s; 
+}
+
+.right-footer a:hover {
+    color: #3298DB; 
+}
+
+/* Media query for mobile devices (adjust the max-width as needed) */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        align-items: center;
+    }
 }

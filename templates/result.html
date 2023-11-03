@@ -40,7 +40,7 @@
             {% endif %}
 
             <div class="course-rec">
-                <button class="favorite-button" data-course-code="{{ table['CourseCode'] }}" data-course-name="{{ table['Name'] }}" data-description="{{ table['Description'] }}" data-prereqs="{{ table['Prereqs'] }}" data-schedule="{{ table['Schedule'] }}" data-instructor="{{ table['Faculty'] }}" style="color: red;">&#9825; Favorite</button>
+                <button class="favorite-button" data-course-code="{{ table['CourseCode'] }}" data-course-name="{{ table['Name'] }}" data-description="{{ table['Description'] }}" data-prereqs="{{ table['Prereqs'] }}" data-schedule="{{ table['Schedule'] }}" data-instructor="{{ table['Faculty'] }}" >&#9825; Favorite</button>
                 <button type="button" id = "parent" class="collapsible button {{ buttonClass }}">
                     
                     <div class = "{{ buttonClass }}"> 
@@ -82,6 +82,12 @@
         {% set current_semester = current_semester %}
         {% include 'favorites.html' %}
     </div>
+</div>
+<div class="footer">
+    <p class="left-footer">&copy; Associated Students of Pomona College</p>
+    <p class="right-footer">
+        Created by <a href="https://pomonastudents.org/sdg">ASPC Software Development Group</a> and <a href="https://www.p-ai.org/">p-ai</a>.
+    </p>
 </div>
 
 <script>
