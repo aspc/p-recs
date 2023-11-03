@@ -1,5 +1,5 @@
 body {
-	font-family: "IBM Plex Sans", sans-serif;
+	font-family: "Karla", sans-serif;
 	margin: 0;
 }
 
@@ -76,7 +76,7 @@ input {
 	box-sizing: border-box;
 	display: block;
 	margin: 8px 0;
-	font-family: "IBM Plex Sans", sans-serif;
+	font-family: "Karla", sans-serif;
 }
 
 input[type="submit"] {
@@ -137,7 +137,7 @@ input[type="submit"]:hover {
   padding: 12px 8px;
   text-align: center;
   font-size: 12px;
-	font-family: "IBM Plex Sans", sans-serif;
+	font-family: "Karla", sans-serif;
 }
 
 
