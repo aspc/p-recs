@@ -49,6 +49,7 @@
         
             const removeButton = document.createElement('button');
             removeButton.textContent = 'Remove';
+            removeButton.classList.add('remove-button')
             removeButton.onclick = function () {
                 removeFromFavorites(courseId);
             };

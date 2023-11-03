@@ -169,6 +169,30 @@ input[type="submit"]:hover {
 .button:hover {
 	opacity: 0.9;}
 
+.remove-button {
+	background-color: transparent;
+	border: 1px solid #EEEEEE;
+	padding: 1px 3px; 
+	transition: background-color 0.3s;
+
+	&:hover {
+	color: #3298DB; /* Change text color on hover */
+	}
+}
+
+.favorite-button {
+	cursor: pointer;
+	background-color: transparent;
+	border: 1px solid #EEEEEE; 
+	padding: 1px 3px; 
+	transition: background-color 0.3s; 
+	display: inline-block;
+
+	&:hover {
+	color: #3298DB; /* Change text color on hover */
+	}
+}
+
 .uppercase-title {
 	font-weight: 700;
 	text-transform: uppercase;
