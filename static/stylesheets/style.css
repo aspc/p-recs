@@ -35,7 +35,8 @@ h1 {
 	justify-content: flex-start;
 	align-items: stretch;
 	text-align: left;
-	padding: 16px 16px;
+	padding: 16px;
+	box-sizing: border-box;
 }
 
 .checkboxes input[type="checkbox"] {
@@ -188,7 +189,6 @@ input[type="submit"]:hover {
     justify-content: space-between;
     align-items: center;
     text-align: center;
-	width: 100%;
 }
 
 .right-footer a {
