@@ -176,21 +176,35 @@ input[type="submit"]:hover {
 	margin-bottom: 2px;
 	margin-top: 0
 }
+
 /* Footer styling */
 .footer {
 	background-color: #FAFAFA;
 	color: #717171;
 	padding: 1rem;
-    font-size: 1rem;
 	font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+	width: 100%;
 }
 
-p.left-footer {
-	padding: 1px;
-	padding-left: 3rem;
+.right-footer a {
+    color: initial; 
+    text-decoration: none;
+    transition: color 0.3s; 
 }
 
-p.right-footer {
-	padding: 1px;
-	padding-right: 3rem;
+.right-footer a:hover {
+    color: #3298DB; 
+}
+
+/* Media query for mobile devices (adjust the max-width as needed) */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        align-items: center;
+    }
 }
