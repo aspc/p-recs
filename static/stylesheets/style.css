@@ -55,7 +55,7 @@ h1 {
 	.left-col {
 		width: 70%;
 		height: 100%;
-		border-right: 1px solid black;
+		border-right: 1px solid #DBDBDB;
 		flex-grow: 0;
 		flex-shrink: 0;
 		box-sizing: border-box;
@@ -65,6 +65,8 @@ h1 {
 
 hr {
 	margin: 32px 0;
+	border-color: #DBDBDB;
+	border-top: #DBDBDB
 }
 
 input {
@@ -78,7 +80,7 @@ input {
 }
 
 input[type="submit"] {
-	background-color: red;
+	background-color: #3298DB;
 	border: 0;
 	color: white;
 	opacity: 0.75;
@@ -173,4 +175,22 @@ input[type="submit"]:hover {
 	font-size: 12px;
 	margin-bottom: 2px;
 	margin-top: 0
+}
+/* Footer styling */
+.footer {
+	background-color: #FAFAFA;
+	color: #717171;
+	padding: 1rem;
+    font-size: 1rem;
+	font-size: 14px;
+}
+
+p.left-footer {
+	padding: 1px;
+	padding-left: 3rem;
+}
+
+p.right-footer {
+	padding: 1px;
+	padding-right: 3rem;
 }
