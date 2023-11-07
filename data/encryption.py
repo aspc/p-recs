@@ -1,11 +1,11 @@
-import config
+import os
 from cryptography.fernet import Fernet
 
-configuration = config.Config('keys.py')
+csv_encryption_key = os.environ.get("csv_encryption_key")
 
 def encrypt_file(file_name, encrypted_file_name):
     
-    fernet = Fernet(configuration["csv_encryption_key"])
+    fernet = Fernet(csv_encryption_key)
     
     with open(file_name, 'rb') as file:
         original = file.read()
@@ -17,7 +17,7 @@ def encrypt_file(file_name, encrypted_file_name):
         
         
 def decrypt_file(file_name):
-	fernet = Fernet(configuration["csv_encryption_key"])
+	fernet = Fernet(csv_encryption_key)
 	
 	with open(file_name, 'rb') as enc_file:
 		encrypted = enc_file.read()

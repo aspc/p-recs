@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Favorites</title>
+    </head>
+    <body> 
+        <div class="favorites-section" style="align-self: flex-start; text-align: left; width: 100%;">
+            <h3 style="font-size: 18px; text-align: center;">Favorites</h3>
+            <ul id="favorites-list" style="list-style: none; padding: 0;">
+                <!-- Favorite courses will be displayed here -->
+            </ul>
+        </div>
+    </body>
+    <script>
+        checkSemester('{{ current_semester }}')
+        const favoritesList = document.getElementById('favorites-list');
+        var favorites = new Map(Object.entries(JSON.parse(localStorage.getItem('favorites') || '{}')));
+        var favoritesStr = new Map(Object.entries(JSON.parse(localStorage.getItem('favorites') || '{}')));
+        displayFavoriteCourses();
+        
+        // ------------------------------------ HELPER FUNCTIONS ------------------------------------
+
+        // clears local storage favorites if semester changes
+        function checkSemester(currentSemester) {
+            const savedSemester = localStorage.getItem('semester') || '';
+            if (savedSemester !== currentSemester) {
+                localStorage.setItem('semester', currentSemester);
+                localStorage.setItem('favorites', '{}');
+            }
+        }
+
+        function displayFavoriteCourses() {
+            // Iterate through the favorite courses
+            for (const [key, value] of favorites) {
+                // turn value into map
+                courseInfo = new Map(Object.entries(JSON.parse(value)));
+                favorites.set(key, courseInfo);
+                renderFavorite(key);
+            };
+        }
+
+        function renderFavorite(courseId) {
+            if (!favorites.has(courseId)) {
+                return;
+            }
+            courseInfo = favorites.get(courseId);
+            const div = document.createElement('div');
+            div.classList.add('course-rec');
+        
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.classList.add('remove-button')
+            removeButton.onclick = function () {
+                removeFromFavorites(courseId);
+            };
+        
+            const courseButton = document.createElement('button');
+            const buttonClass = getButtonClass(courseId);
+            courseButton.classList.add('col-fav', 'button', buttonClass);
+        
+            const buttonContentDiv = document.createElement('div');
+            buttonContentDiv.classList.add(buttonClass);
+        
+            const courseCodeNameElement = document.createElement('div');
+            courseCodeNameElement.textContent = courseId + " " + courseInfo.get("courseName");
+            courseCodeNameElement.style = "font-size: 14px;"
+        
+            buttonContentDiv.appendChild(courseCodeNameElement);
+            courseButton.appendChild(buttonContentDiv);
+        
+            const contentDiv = document.createElement('div');
+            contentDiv.style = "font-size: 12px;"
+            contentDiv.classList.add('content');
+                    
+            const descriptionElement = document.createElement('div');
+            descriptionElement.textContent = courseInfo.get('description');
+
+            const instructorElement = document.createElement('div');
+            instructorElement.textContent = courseInfo.get('instructor');
+            instructorElement.style.marginBottom = '4px';
+
+            const scheduleElement = document.createElement('div');
+            scheduleElement.style.whiteSpace = 'pre-line';
+            scheduleElement.textContent = courseInfo.get('schedule');
+            scheduleElement.style.marginBottom = '4px';
+        
+            const prereqsElement = document.createElement('div');
+            const prereqs = courseInfo.get('prereqs');
+            const prereqText = prereqs ? prereqs : 'None';
+            prereqsElement.textContent = "Prerequisites: " + prereqText;
+
+            const hr = document.createElement('hr')
+            hr.style = "margin-top: 8px; margin-bottom: 8px;"
+        
+            contentDiv.appendChild(descriptionElement);
+            contentDiv.appendChild(hr);
+            contentDiv.appendChild(instructorElement);
+            contentDiv.appendChild(scheduleElement);
+            contentDiv.appendChild(prereqsElement);
+        
+            div.appendChild(removeButton);
+            div.appendChild(courseButton);
+            div.appendChild(contentDiv);
+
+            courseButton.addEventListener("click", function() {
+              if (contentDiv.style.display === "block") {
+                contentDiv.style.display = "none";
+              } else {
+                contentDiv.style.display = "block";
+              }
+            });
+        
+            div.setAttribute('course-id', courseId);
+            // Append the created course div to your favoritesList element
+            favoritesList.appendChild(div);
+
+        }
+        
+        // Function to determine the button class based on course code
+        function getButtonClass(courseCode) {
+            if (courseCode.includes('HM')) {
+                return 'button_hmc';
+            } else if (courseCode.includes('CM')) {
+                return 'button_cmc';
+            } else if (courseCode.includes('PO')) {
+                return 'button_po';
+            } else if (courseCode.includes('SC')) {
+                return 'button_sc';
+            } else if (courseCode.includes('PZ')) {
+                return 'button_pz';
+            } else {
+                return 'button_else';
+            }
+        }
+
+        function removeFromFavorites(courseId) {
+            if (favorites.has(courseId)) {
+                favorites.delete(courseId);
+                favoritesStr.delete(courseId);
+                localStorage.setItem('favorites', JSON.stringify(Object.fromEntries(favoritesStr)));
+        
+                // Remove course from rendered list
+                const liToRemove = favoritesList.querySelector(`div[course-id="${courseId}"]`);
+                if (liToRemove) {
+                    liToRemove.remove();
+                }
+            }
+        }
+
+        function addToFavorites(courseId, courseName, description, prereqs, schedule, instructor) {
+            if (!favorites.has(courseId)) {
+
+                courseInfo = new Map([
+                    ["courseName", courseName],
+                    ["description", description],
+                    ["prereqs", prereqs],
+                    ["schedule", schedule],
+                    ["instructor", instructor]
+                ]);
+                favorites.set(courseId, courseInfo);
+                courseInfoStr =JSON.stringify(Object.fromEntries(courseInfo));
+                favoritesStr.set(courseId, courseInfoStr);
+                localStorage.setItem('favorites', JSON.stringify(Object.fromEntries(favoritesStr)));
+                renderFavorite(courseId);
+            }
+        }
+
+    </script>
+</html>

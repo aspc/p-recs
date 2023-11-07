@@ -11,8 +11,15 @@
 		</div>
 		<div class="right-col">
 			<!-- <p>Visualization of courses coming soon (real WIP screenshot)</p> -->
-			<p> Favorites</p>
+			{% set current_semester = current_semester %}
+			{% include 'favorites.html' %}
 		</div>
+	</div>
+	<div class="footer">
+		<p class="left-footer">&copy; Associated Students of Pomona College</p>
+		<p class="right-footer">
+			Created by <a href="https://pomonastudents.org/sdg">ASPC Software Development Group</a> and <a href="https://www.p-ai.org/">p-ai</a>.
+		</p>
 	</div>
 </body>
 </html>

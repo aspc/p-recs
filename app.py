@@ -5,10 +5,13 @@ from data.modify_data import clean_course_info
 from flask import Flask, jsonify, request, redirect, render_template, flash
 import pandas as pd 
 import pickle
-from data.get_recs import recommend_courses, filter_course_area
+from data.get_recs import recommend_courses
 from data.encryption import decrypt_file
+import traceback
 
 app = Flask(__name__)
+
+current_semester = '2023;FA'
   
 # decrypt_files
 
@@ -23,32 +26,27 @@ clean_course_info(vector_courses)
 
 @app.route('/')
 def index():
-    return render_template('index.html') 
+    return render_template('index.html', current_semester = current_semester) 
 
 @app.route('/rec',methods=['POST'])
 def getvalue():
 	try:
 		query = request.form['search']
-		print(query)
-                
-		# TODO: change filters
+
 		course_area = request.form['department']
 
 		selected_days = request.form.getlist('days')  
-		print(selected_days)  # return a list of days
-                
+        
 		campus_list = request.form.getlist('campus')    
 
-		print(campus_list) # return a list of campuses
-
-		result_df = recommend_courses(query, courses_df = vector_courses,
+		df = recommend_courses(query, courses_df = vector_courses,
 									 course_area= course_area,
 									 campus_list= campus_list, selected_days=selected_days)
-                
-		return render_template('result.html', tables = result_df, query = query)
 
+		return render_template('result.html', tables = df, query = query, current_semester = current_semester, is_empty = df.empty)
+        
 	except Exception as e:
-		print(e)
+		traceback.print_exc()  # Print the error traceback
 		error = "We are temporarily unable to process your request. Please contact product@aspc.pomona.edu."
 		return render_template('index.html',  error = error) 
 

@@ -2,20 +2,18 @@ import numpy as np
 from numpy import dot
 from numpy.linalg import norm
 import pandas as pd
-import pickle
 import openai
 from openai.embeddings_utils import get_embedding, cosine_similarity
-import config 
+import os
 
-configuration = config.Config('keys.py')
-openai.api_key = configuration["openai_api_key"]
-
+openai_api_key = os.environ.get("openai_api_key")
+openai.api_key = openai_api_key
 
 # note: all_courses is same df as courses_df
-def filter_course_area(all_courses, course_area:str, campus_list = [], selected_days = [], faculty_list = []):
+def filter_course_area(all_courses, course_area:str, campus_list = [], selected_days = []):
 
     # if no filtering is needed
-    if (len(course_area) == 0) & (len(campus_list) == 0) & (len(selected_days) == 0) & (len(faculty_list) == 0):
+    if (len(course_area) == 0) & (len(campus_list) == 5) & (len(selected_days) == 5):
         return all_courses
 
     filtered_courses = all_courses
@@ -27,19 +25,18 @@ def filter_course_area(all_courses, course_area:str, campus_list = [], selected_
         filtered_courses =  filtered_courses[filtered_courses["CourseArea"].apply(lambda x: course_area in x)]
 
     # filter selected days
-    if len(selected_days) > 0: 
+    if len(selected_days) > 0 and len(filtered_courses) != 0: 
  
         selected_days = set(selected_days)
-        print(filtered_courses)
+
         # get rid of empty sets
         filtered_courses = filtered_courses[filtered_courses["Weekday_set"].apply(lambda x: bool(x))]
         
         # we want the entry to be a subset of query entered
         filtered_courses = filtered_courses[filtered_courses["Weekday_set"].apply(lambda x: x.issubset(selected_days))]
 
-
     # filter campus
-    if len(campus_list) > 0:
+    if len(campus_list) > 0 and len(filtered_courses) != 0:
         selected_campus = set(campus_list)
 
         # get rid of empty sets
@@ -47,15 +44,6 @@ def filter_course_area(all_courses, course_area:str, campus_list = [], selected_
 
         # we want entry to be a subset of query entered
         filtered_courses = filtered_courses[filtered_courses["Campus"].apply(lambda x: x.issubset(selected_campus))]
-
-    if len(faculty_list) > 0:
-        selected_faculty = set(faculty_list)
-
-        # get rid of empty sets
-        filtered_courses = filtered_courses[filtered_courses["Faculty"].apply(lambda x: bool(x))]
-
-        # we want the query to be a subset of entries
-        filtered_courses = filtered_courses[filtered_courses["Faculty"].apply(lambda x: x.issubset(selected_faculty))]
 
     return filtered_courses
 
@@ -73,10 +61,10 @@ def get_embedding(list_str):
     
     return(np.array(embedding))
 
-def recommend_courses(query, courses_df, course_area = [], campus_list = [], selected_days = [], faculty_list = [], number_of_courses=10):
+def recommend_courses(query, courses_df, course_area = "", campus_list = [], selected_days = [], number_of_courses=10):
     # Get the embeddings of the query string
 
-    courses_df = filter_course_area(courses_df, course_area, campus_list, selected_days, faculty_list)
+    courses_df = filter_course_area(courses_df, course_area, campus_list, selected_days)
     
     if query is None:
         return courses_df.head(10)
