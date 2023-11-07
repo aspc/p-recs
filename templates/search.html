@@ -20,24 +20,27 @@
     <!-- used to reference elements in JS OR
     to reference form data after a form is submitted -->
 
-    <input
-      type="text"
-      name="search"
-      id="searchBox"
-      placeholder="discussion-based class on technology and ethics..."
-    />
-    <p>
-      <a
-        class="btn btn-outline-secondary"
-        data-toggle="collapse"
-        href="#course-filters"
-        role="button"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
-        Filters
-      </a>
-    </p>
+    <div style="display: flex; align-items: center;">
+      <input
+        type="text"
+        name="search"
+        id="searchBox"
+        placeholder="discussion-based class on technology and ethics..."
+        style="flex: 1; margin-right: 10px;"
+      />
+      <div style="display: flex; align-items: center;">
+        <a
+          class="btn btn-outline-secondary"
+          data-toggle="collapse"
+          href="#course-filters"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >
+          Filters
+        </a>
+      </div>
+    </div>
     <div class="collapse" id="course-filters">
       <div class="field">
         <label class="label">Department</label>
