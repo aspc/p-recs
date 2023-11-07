@@ -6,6 +6,7 @@ from flask import Flask, jsonify, request, redirect, render_template, flash
 import pandas as pd 
 from data.get_recs import recommend_courses
 from data.encryption import decrypt_file
+import traceback
 
 app = Flask(__name__)
 
@@ -36,6 +37,7 @@ def getvalue():
 
 		return render_template('result.html', tables = df, query = query, current_semester = current_semester)
 	except Exception as e:
+		traceback.print_exc()  # Print the error traceback
 		error = "We are temporarily unable to process your request. Please contact product@aspc.pomona.edu."
 		return render_template('index.html', error = error) 
 
