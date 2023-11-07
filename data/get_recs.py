@@ -28,14 +28,14 @@ def filter_course_area(all_courses, course_area:str, campus_list = [], selected_
 
     # filter selected days
     if len(selected_days) > 0: 
-        
+ 
         selected_days = set(selected_days)
         print(filtered_courses)
         # get rid of empty sets
-        filtered_courses = filtered_courses[filtered_courses["Weekdays"].apply(lambda x: bool(x))]
+        filtered_courses = filtered_courses[filtered_courses["Weekday_set"].apply(lambda x: bool(x))]
         
         # we want the entry to be a subset of query entered
-        filtered_courses = filtered_courses[filtered_courses["Weekdays"].apply(lambda x: x.issubset(selected_days))]
+        filtered_courses = filtered_courses[filtered_courses["Weekday_set"].apply(lambda x: x.issubset(selected_days))]
 
 
     # filter campus
