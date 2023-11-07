@@ -14,6 +14,13 @@
         <div class="results">
             <h3>Recs for <i> {{ query }} </i></h3>
 
+            {% if is_empty %}
+
+            </p>No results found with current filters and query.</p>
+
+            {% endif %}
+            
+
             {% for row in tables.iterrows() %}
             {% set table = row[1] %}
 
