@@ -41,6 +41,160 @@
         </a>
       </div>
     </div>
+
+    {% set department_list = [
+      "Accel Integrated Science",
+      "Aerospace Studies",
+      "Africana Studies",
+      "All Gend/Fem/Women Stds",
+      "All Government/Politics",
+      "All Languages",
+      "All Lit in Translation",
+      "American Studies",
+      "Anthropology",
+      "Applied Life Science",
+      "Arabic & Arabic Transltn",
+      "Art",
+      "Art Conservation",
+      "Art History",
+      "Arts Management",
+      "Asian American Studies",
+      "Asian Studies",
+      "Astronomy",
+      "Biology",
+      "Botany",
+      "CMC Internship",
+      "CMS Varsity Sports",
+      "Chemistry",
+      "Chican@/Latin@ Transnatl",
+      "Chicanx-Latinx Studies",
+      "Chinese",
+      "Chinese Lit, Engl Trans",
+      "Classics",
+      "Community & Global Healt",
+      "Computer Sci-Mathematics",
+      "Computer Science",
+      "Core Lab (HMC)",
+      "Creative Studies",
+      "Cultural Studies",
+      "Dance",
+      "Data Science",
+      "Digital Humanities",
+      "Economics",
+      "Education",
+      "Engineering",
+      "English or Engl Wrld Lit",
+      "Environmental Analysis",
+      "European Studies",
+      "Fem,Gndr,Sex Studies",
+      "Finance Sequence",
+      "First Year Seminar",
+      "Foreign Languages",
+      "French",
+      "French Discussion Labs",
+      "Freshman Humanities Sem",
+      "Freshman Writing Seminar",
+      "Gender & Women's Studies",
+      "Gender/Feminist Studies",
+      "Gender/Women's/Fem. Stds",
+      "Geography",
+      "Geology",
+      "German",
+      "German Lit, Engl Trans",
+      "German Studies",
+      "Government",
+      "Hebrew",
+      "History",
+      "History of Ideas",
+      "Human Resources Design",
+      "Humanities",
+      "Humanities & Soc Science",
+      "Humanities Major:Culture",
+      "Information Science",
+      "Inside Out",
+      "Integrative Experience",
+      "Interdisc./Other Science",
+      "Interdisciplinry Studies",
+      "International Relations",
+      "Intl/Intercultural Stds",
+      "Italian",
+      "Japanese",
+      "Japanese Lit, Engl Trans",
+      "Jewish Studies",
+      "KGI School of Pharmacy",
+      "Keck Science Labs",
+      "Korean & Korean Transltn",
+      "Languages and Literature",
+      "Late Antique-Medvl Stds",
+      "Latin American Studies",
+      "Leadership Studies",
+      "Legal Studies",
+      "Linguistics",
+      "Linguistics & Cog Sci",
+      "Literature",
+      "Management",
+      "Master's in Finance",
+      "Mathemat/Comput Biology",
+      "Mathematics",
+      "Media Studies",
+      "Middle Eastern Studies",
+      "Mideast & No Africa Stds",
+      "Military Sci.&Leadership",
+      "Modern Lang, Lit & Cult",
+      "Molecular Biology",
+      "Munroe Ctr Social Inqry",
+      "Music",
+      "Natural Sci: Non-Majors",
+      "Neuroscience",
+      "Ontario Program",
+      "Organizational Studies",
+      "Persian",
+      "Philosophy",
+      "Philosophy,Politics,Econ",
+      "Physical Education",
+      "Physics",
+      "Political Studies",
+      "Politics",
+      "Politics & Policy",
+      "Politics/Int. Studies",
+      "Portuguese",
+      "Portuguese in Translatn",
+      "Psychology",
+      "Public Policy Analysis",
+      "Religious Studies",
+      "Romance Literatures",
+      "Russian",
+      "Russian Lit, Engl Trans",
+      "Science,Technlgy,Society",
+      "Secular Studies",
+      "Self-Instr Lang Program",
+      "Senior Thesis",
+      "Social Science",
+      "Sociology",
+      "Spanish",
+      "Spanish Lit, Engl Trans",
+      "Speech",
+      "Swahili",
+      "Theatre",
+      "Transdisciplinary",
+      "Writing",
+      "Spanish Discussion Labs",
+      "Cognitive Science",
+      "Critical Action Soc Advc",
+      "Critical Global Studies",
+      "Global/Local Action Stdy",
+      "Nat Amer/Indigenous St",
+      "Scripps Post-bac",
+      "Climate&EnvironmentalSci",
+      "Entrepreneurship",
+      "Integrated Sciences",
+  ]  
+    %}
+
+    <!--  Note: filters: [course area, campuses, selected days] -->
+
+    {% set selected_department = filters[0] if filters else ""  %}
+
     <div class="collapse" id="course-filters">
       <div class="field">
         <label class="label">Department</label>
@@ -48,271 +202,24 @@
           <div class="select is-fullwidth">
             <select name="department" id="department">
               <option value="">(any)</option>
-              <option value="Accel Integrated Science">
-                Accel Integrated Science
-              </option>
-              <option value="Aerospace Studies">Aerospace Studies</option>
-              <option value="Africana Studies">Africana Studies</option>
-              <option value="All Gend/Fem/Women Stds">
-                All Gend/Fem/Women Stds
-              </option>
-              <option value="All Government/Politics">
-                All Government/Politics
-              </option>
-              <option value="All Languages">All Languages</option>
-              <option value="All Lit in Translation">
-                All Lit in Translation
-              </option>
-              <option value="American Studies">American Studies</option>
-              <option value="Anthropology">Anthropology</option>
-              <option value="Applied Life Science">Applied Life Science</option>
-              <option value="Arabic &amp; Arabic Transltn">
-                Arabic &amp; Arabic Transltn
-              </option>
-              <option value="Art">Art</option>
-              <option value="Art Conservation">Art Conservation</option>
-              <option value="Art History">Art History</option>
-              <option value="Arts Management">Arts Management</option>
-              <option value="Asian American Studies">
-                Asian American Studies
-              </option>
-              <option value="Asian Studies">Asian Studies</option>
-              <option value="Astronomy">Astronomy</option>
-              <option value="Biology">Biology</option>
-              <option value="Botany">Botany</option>
-              <option value="CMC Internship">CMC Internship</option>
-              <option value="CMS Varsity Sports">CMS Varsity Sports</option>
-              <option value="Chemistry">Chemistry</option>
-              <option value="Chican@/Latin@ Transnatl">
-                Chican@/Latin@ Transnatl
-              </option>
-              <option value="Chicanx-Latinx Studies">
-                Chicanx-Latinx Studies
-              </option>
-              <option value="Chinese">Chinese</option>
-              <option value="Chinese Lit, Engl Trans">
-                Chinese Lit, Engl Trans
-              </option>
-              <option value="Classics">Classics</option>
-              <option value="Community &amp; Global Healt">
-                Community &amp; Global Healt
-              </option>
-              <option value="Computer Sci-Mathematics">
-                Computer Sci-Mathematics
-              </option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Core Lab (HMC)">Core Lab (HMC)</option>
-              <option value="Creative Studies">Creative Studies</option>
-              <option value="Cultural Studies">Cultural Studies</option>
-              <option value="Dance">Dance</option>
-              <option value="Data Science">Data Science</option>
-              <option value="Digital Humanities">Digital Humanities</option>
-              <option value="Economics">Economics</option>
-              <option value="Education">Education</option>
-              <option value="Engineering">Engineering</option>
-              <option value="English or Engl Wrld Lit">
-                English or Engl Wrld Lit
-              </option>
-              <option value="Environmental Analysis">
-                Environmental Analysis
-              </option>
-              <option value="European Studies">European Studies</option>
-              <option value="Fem,Gndr,Sex Studies">Fem,Gndr,Sex Studies</option>
-              <option value="Finance Sequence">Finance Sequence</option>
-              <option value="First Year Seminar">First Year Seminar</option>
-              <option value="Foreign Languages">Foreign Languages</option>
-              <option value="French">French</option>
-              <option value="French Discussion Labs">
-                French Discussion Labs
-              </option>
-              <option value="Freshman Humanities Sem">
-                Freshman Humanities Sem
-              </option>
-              <option value="Freshman Writing Seminar">
-                Freshman Writing Seminar
-              </option>
-              <option value="Gender &amp; Women's Studies">
-                Gender &amp; Women's Studies
-              </option>
-              <option value="Gender/Feminist Studies">
-                Gender/Feminist Studies
-              </option>
-              <option value="Gender/Women's/Fem. Stds">
-                Gender/Women's/Fem. Stds
-              </option>
-              <option value="Geography">Geography</option>
-              <option value="Geology">Geology</option>
-              <option value="German">German</option>
-              <option value="German Lit, Engl Trans">
-                German Lit, Engl Trans
-              </option>
-              <option value="German Studies">German Studies</option>
-              <option value="Government">Government</option>
-              <option value="Hebrew">Hebrew</option>
-              <option value="History">History</option>
-              <option value="History of Ideas">History of Ideas</option>
-              <option value="Human Resources Design">
-                Human Resources Design
-              </option>
-              <option value="Humanities">Humanities</option>
-              <option value="Humanities &amp; Soc Science">
-                Humanities &amp; Soc Science
-              </option>
-              <option value="Humanities Major:Culture">
-                Humanities Major:Culture
-              </option>
-              <option value="Information Science">Information Science</option>
-              <option value="Inside Out">Inside Out</option>
-              <option value="Integrative Experience">
-                Integrative Experience
-              </option>
-              <option value="Interdisc./Other Science">
-                Interdisc./Other Science
-              </option>
-              <option value="Interdisciplinry Studies">
-                Interdisciplinry Studies
-              </option>
-              <option value="International Relations">
-                International Relations
-              </option>
-              <option value="Intl/Intercultural Stds">
-                Intl/Intercultural Stds
-              </option>
-              <option value="Italian">Italian</option>
-              <option value="Japanese">Japanese</option>
-              <option value="Japanese Lit, Engl Trans">
-                Japanese Lit, Engl Trans
-              </option>
-              <option value="Jewish Studies">Jewish Studies</option>
-              <option value="KGI School of Pharmacy">
-                KGI School of Pharmacy
-              </option>
-              <option value="Keck Science Labs">Keck Science Labs</option>
-              <option value="Korean &amp; Korean Transltn">
-                Korean &amp; Korean Transltn
-              </option>
-              <option value="Languages and Literature">
-                Languages and Literature
-              </option>
-              <option value="Late Antique-Medvl Stds">
-                Late Antique-Medvl Stds
-              </option>
-              <option value="Latin American Studies">
-                Latin American Studies
-              </option>
-              <option value="Leadership Studies">Leadership Studies</option>
-              <option value="Legal Studies">Legal Studies</option>
-              <option value="Linguistics">Linguistics</option>
-              <option value="Linguistics &amp; Cog Sci">
-                Linguistics &amp; Cog Sci
-              </option>
-              <option value="Literature">Literature</option>
-              <option value="Management">Management</option>
-              <option value="Master's in Finance">Master's in Finance</option>
-              <option value="Mathemat/Comput Biology">
-                Mathemat/Comput Biology
-              </option>
-              <option value="Mathematics">Mathematics</option>
-              <option value="Media Studies">Media Studies</option>
-              <option value="Middle Eastern Studies">
-                Middle Eastern Studies
-              </option>
-              <option value="Mideast &amp; No Africa Stds">
-                Mideast &amp; No Africa Stds
-              </option>
-              <option value="Military Sci.&amp;Leadership">
-                Military Sci.&amp;Leadership
-              </option>
-              <option value="Modern Lang, Lit &amp; Cult">
-                Modern Lang, Lit &amp; Cult
-              </option>
-              <option value="Molecular Biology">Molecular Biology</option>
-              <option value="Munroe Ctr Social Inqry">
-                Munroe Ctr Social Inqry
-              </option>
-              <option value="Music">Music</option>
-              <option value="Natural Sci: Non-Majors">
-                Natural Sci: Non-Majors
-              </option>
-              <option value="Neuroscience">Neuroscience</option>
-              <option value="Ontario Program">Ontario Program</option>
-              <option value="Organizational Studies">
-                Organizational Studies
-              </option>
-              <option value="Persian">Persian</option>
-              <option value="Philosophy">Philosophy</option>
-              <option value="Philosophy,Politics,Econ">
-                Philosophy,Politics,Econ
-              </option>
-              <option value="Physical Education">Physical Education</option>
-              <option value="Physics">Physics</option>
-              <option value="Political Studies">Political Studies</option>
-              <option value="Politics">Politics</option>
-              <option value="Politics &amp; Policy">
-                Politics &amp; Policy
-              </option>
-              <option value="Politics/Int. Studies">
-                Politics/Int. Studies
-              </option>
-              <option value="Portuguese">Portuguese</option>
-              <option value="Portuguese in Translatn">
-                Portuguese in Translatn
-              </option>
-              <option value="Psychology">Psychology</option>
-              <option value="Public Policy Analysis">
-                Public Policy Analysis
-              </option>
-              <option value="Religious Studies">Religious Studies</option>
-              <option value="Romance Literatures">Romance Literatures</option>
-              <option value="Russian">Russian</option>
-              <option value="Russian Lit, Engl Trans">
-                Russian Lit, Engl Trans
-              </option>
-              <option value="Science,Technlgy,Society">
-                Science,Technlgy,Society
-              </option>
-              <option value="Secular Studies">Secular Studies</option>
-              <option value="Self-Instr Lang Program">
-                Self-Instr Lang Program
-              </option>
-              <option value="Senior Thesis">Senior Thesis</option>
-              <option value="Social Science">Social Science</option>
-              <option value="Sociology">Sociology</option>
-              <option value="Spanish">Spanish</option>
-              <option value="Spanish Lit, Engl Trans">
-                Spanish Lit, Engl Trans
-              </option>
-              <option value="Speech">Speech</option>
-              <option value="Swahili">Swahili</option>
-              <option value="Theatre">Theatre</option>
-              <option value="Transdisciplinary">Transdisciplinary</option>
-              <option value="Writing">Writing</option>
-              <option value="Spanish Discussion Labs">
-                Spanish Discussion Labs
-              </option>
-              <option value="Cognitive Science">Cognitive Science</option>
-              <option value="Critical Action Soc Advc">
-                Critical Action Soc Advc
-              </option>
-              <option value="Critical Global Studies">
-                Critical Global Studies
-              </option>
-              <option value="Global/Local Action Stdy">
-                Global/Local Action Stdy
-              </option>
-              <option value="Nat Amer/Indigenous St">
-                Nat Amer/Indigenous St
-              </option>
-              <option value="Scripps Post-bac">Scripps Post-bac</option>
-              <option value="Climate&amp;EnvironmentalSci">
-                Climate&amp;EnvironmentalSci
-              </option>
-              <option value="Entrepreneurship">Entrepreneurship</option>
-              <option value="Integrated Sciences">Integrated Sciences</option>
+              {% for department in department_list %}
+                <option value="{{ department }}">{{ department }}</option>
+                <option value="{{ department }}" {% if selected_department == department %}selected{% endif %}>
+                  {{ department }}
+                </option>
+              {% endfor %}
             </select>
           </div>
         </div>
       </div>
+
+      <!--  Use previous filters or default filters -->
+
+      {% set days_default = ["1", "1", "1", "1", "1"]  %}
+      {% set day_is_checked = filters[2] if filters else days_default%}
+      {% set campus_default = ["1", "1", "1", "1", "1"]  %}
+      {% set campus_is_checked = filters[1] if filters else campus_default%}
+      
       <div class="field">
         <label class="label">Meets on</label>
         <div class="field is-grouped checkboxes meets-on">
@@ -323,7 +230,7 @@
               type="checkbox"
               name="days"
               value="M"
-              checked="checked" 
+              {% if day_is_checked[0] == "1" %}checked="checked"{% endif %}
             />
             <label for="monday">Monday</label>
           </div>
@@ -334,7 +241,7 @@
               type="checkbox"
               name="days"
               value="T"
-              checked="checked" 
+              {% if day_is_checked[1] == "1" %}checked="checked"{% endif %}
             />
             <label for="tuesday">Tuesday</label>
           </div>
@@ -345,7 +252,7 @@
               type="checkbox"
               name="days"
               value="W"
-              checked="checked" 
+              {% if day_is_checked[2] == "1" %}checked="checked"{% endif %}
             />
             <label for="wednesday">Wednesday</label>
           </div>
@@ -356,7 +263,7 @@
               type="checkbox"
               name="days"
               value="R"
-              checked="checked" 
+              {% if day_is_checked[3] == "1" %}checked="checked"{% endif %}
             />
             <label for="thursday">Thursday</label>
           </div>
@@ -367,7 +274,7 @@
               type="checkbox"
               name="days"
               value="F"
-              checked="checked" 
+              {% if day_is_checked[4] == "1" %}checked="checked"{% endif %}
             />
             <label for="friday">Friday</label>
           </div>
@@ -383,7 +290,7 @@
               type="checkbox"
               name="campus"
               value="PO Campus"
-              checked="checked" 
+              {% if campus_is_checked[0] == "1" %}checked="checked"{% endif %} 
             />
             <label for="pomona" class="campus_PO">Pomona</label>
           </div>
@@ -394,7 +301,7 @@
               type="checkbox"
               name="campus"
               value="CM Campus"
-              checked="checked" 
+              {% if campus_is_checked[1] == "1" %}checked="checked"{% endif %} 
             />
             <label for="claremont_mckenna" class="campus_CM">CMC</label>
           </div>
@@ -405,7 +312,7 @@
               type="checkbox"
               name="campus"
               value="HM Campus"
-              checked="checked" 
+              {% if campus_is_checked[2] == "1" %}checked="checked"{% endif %} 
             />
             <label for="harvey_mudd" class="campus_HM">HM</label>
           </div>
@@ -416,7 +323,7 @@
               type="checkbox"
               name="campus"
               value="SC Campus"
-              checked="checked" 
+              {% if campus_is_checked[3] == "1" %}checked="checked"{% endif %} 
             />
             <label for="scripps" class="campus_SC">SC</label>
           </div>
@@ -427,7 +334,7 @@
               type="checkbox"
               name="campus"
               value="PZ Campus"
-              checked="checked" 
+              {% if campus_is_checked[4] == "1" %}checked="checked"{% endif %} 
             />
             <label for="pitzer" class="campus_PZ">PZ</label>
           </div>
