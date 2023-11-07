@@ -415,3 +415,7 @@ a.campus_SC:hover {
 	padding: 4px 8px;
 	font-family: "IBM Plex Sans", sans-serif;
 }
+
+.top-checkbox {
+    margin-bottom: 20px;
+}
