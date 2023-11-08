@@ -7,6 +7,7 @@ import pandas as pd
 import pickle
 from data.get_recs import recommend_courses
 from data.encryption import decrypt_file
+from filters import get_filters
 import traceback
 
 app = Flask(__name__)
@@ -42,8 +43,10 @@ def getvalue():
 		df = recommend_courses(query, courses_df = vector_courses,
 									 course_area= course_area,
 									 campus_list= campus_list, selected_days=selected_days)
+  
+		filters = get_filters(course_area, campus_list, selected_days)
 
-		return render_template('result.html', tables = df, query = query, current_semester = current_semester, is_empty = df.empty)
+		return render_template('result.html', tables = df, query = query, current_semester = current_semester, is_empty = df.empty, filters=filters)
         
 	except Exception as e:
 		traceback.print_exc()  # Print the error traceback
