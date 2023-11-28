@@ -9,14 +9,28 @@ from data.get_recs import recommend_courses
 from data.encryption import decrypt_file
 from filters import get_filters
 import traceback
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
+
+
+# limits the number of requests by a single user per day
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["50 per day"],
+    storage_uri="memory://",
+)
+
+@app.errorhandler(429)
+def ratelimit_handler(e):
+    error = "Too many requests. Please try again soon."
+    return render_template('index.html',  error = error) 
 
 current_semester = '2023;FA'
   
 # decrypt_files
-
-
 for file_name in ['data/encrypted_vectors_SP24_courses.pkl']:
     decrypt_file(file_name)
     
@@ -30,6 +44,7 @@ def index():
     return render_template('index.html', current_semester = current_semester) 
 
 @app.route('/rec',methods=['POST'])
+@limiter.limit("50 per day") # can modify this if needed
 def getvalue():
 	try:
 		query = request.form['search']
