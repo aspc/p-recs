@@ -25,7 +25,7 @@
         type="text"
         name="search"
         id="searchBox"
-        placeholder="discussion-based class on technology and ethics..."
+        placeholder=""
         style="flex: 1; margin-right: 10px;"
         maxlength="100"
       />
@@ -42,6 +42,31 @@
         </a>
       </div>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Define an array of predefined placeholders
+        var placeholders = [
+          "discussion-based class on technology and ethics...",
+          "history of Latin American dance...",
+          "collaborative class on environmental studies...",
+          "discussion-based class on philosophy and ethics...",
+          "genetics, biology, neuroscience + machine learning, computation, CS...",
+          "Theatre film acting psychology cognitive science criminal...",
+          "ethics and technology...",
+          "Harry Potter...",
+          "fortune cookie...",
+        ];
+      
+        // Get the input element by its ID
+        var searchBox = document.getElementById("searchBox");
+      
+        // Generate a random index to select a placeholder from the array
+        var randomIndex = Math.floor(Math.random() * placeholders.length);
+      
+        // Set the generated placeholder for the input element
+        searchBox.placeholder = placeholders[randomIndex];
+      });
+      </script>
 
     {% set department_list = [
       "Accel Integrated Science",
