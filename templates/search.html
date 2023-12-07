@@ -204,7 +204,6 @@
             <select name="department" id="department">
               <option value="">(any)</option>
               {% for department in department_list %}
-                <option value="{{ department }}">{{ department }}</option>
                 <option value="{{ department }}" {% if selected_department == department %}selected{% endif %}>
                   {{ department }}
                 </option>
