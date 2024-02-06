@@ -13,12 +13,15 @@ app = Flask(__name__)
 
 # set to correct semester
 current_semester = '2024;SP'
-  
+
+# set current semester in app.py
+term = current_semester.replace(';', '') # use correct term (2023FA for fall 2023)
+
 # decrypt_files
-for file_name in ['data/encrypted_vectors_SP24_courses.pkl']:
+for file_name in [f'data/encrypted_vectors_{term}_courses.pkl']:
     decrypt_file(file_name)
     
-vector_courses = pd.read_pickle("data/decrypted_vectors_SP24_courses.pkl")
+vector_courses = pd.read_pickle(f"data/decrypted_vectors_{term}_courses.pkl")
 
 # modify course data (note: could be done before encryption)
 clean_course_info(vector_courses)

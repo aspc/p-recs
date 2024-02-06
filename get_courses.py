@@ -4,15 +4,11 @@ import pandas as pd
 import os
 from data.encryption import encrypt_file
 from ast import literal_eval
-from app import current_semester
+from get_courses import current_semester, term
 
 import re
 import openai
 import numpy as np
-
-# set current semester in app.py
-term = current_semester.replace(';', '') # use correct term (FA23 for fall 2023)
-
 
 api_key = os.environ.get("api_key")
 
@@ -29,6 +25,7 @@ for area_codes in course_areas.json():
 def get_area_course_info(code):
     payload = {}
     payload["api_key"] = api_key
+    # current semester set in app.py
     api_url = "https://jicsweb.pomona.edu/api/Courses/"+ current_semester + "/" + code
     r = requests.get(
         api_url, params=payload)
