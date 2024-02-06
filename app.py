@@ -11,11 +11,10 @@ import traceback
 
 app = Flask(__name__)
 
-current_semester = '2023;FA'
+# set to correct semester
+current_semester = '2024;SP'
   
 # decrypt_files
-
-
 for file_name in ['data/encrypted_vectors_SP24_courses.pkl']:
     decrypt_file(file_name)
     
