@@ -44,9 +44,8 @@ def index():
     return render_template('index.html', current_semester = current_semester) 
 
 
-
 import pandas as pd
-courses = pd.read_csv('data/courses.csv')
+courses = pd.read_csv('data/courses-2024.csv')
 
 @app.route('/rec',methods=['POST'])
 @limiter.limit("50 per day") # can modify this if needed
@@ -63,19 +62,9 @@ def getvalue():
 		df = recommend_courses(query, courses_df = vector_courses,
 									 course_area= course_area,
 									 campus_list= campus_list, selected_days=selected_days)
-		# df['link'] = df.apply(lambda x: get_links(x['Name'], x['Campus']), axis=1)
-		# for index, row in df.iterrows():
-		# 	print(list(row['Campus'])[0][:2])
-		# 	# find id of course in courses df by matching with course Name and Campus
-		# 	course_id = courses[(courses['Name'] == row['Name'])].index[0]
-		# 	print(course_id)
-		courses['Campus'] = courses['Code slug'].str[-2:]
-		courses.to_csv('courses.csv', index=False)
-		# df['link'] = df.apply(lambda x: get_links(x['Name'], x['Campus']), axis=1)
-	
-		
+        
+		df['link'] = df.apply(lambda x: get_links(x['Name'], x['Campus']), axis=1)
 		filters = get_filters(course_area, campus_list, selected_days)
-
 		return render_template('result.html', tables = df, query = query, current_semester = current_semester, is_empty = df.empty, filters=filters)
         
 	except Exception as e:
@@ -85,8 +74,12 @@ def getvalue():
 
 
 def get_links(name, campus):
-	course_id = courses[(courses['Name'] == name) & (courses['Campus'] == campus)]['course_id'].index[0]
-	return f"https://pomonastudents.org/courses/{course_id}"
+      campus = list(campus)[0][:2]
+      print(campus, name)
+      course_id = courses.loc[(courses['Name'] == name) & (courses['Campus']== campus)]['Id']
+      if len(course_id) == 0:  return None
+      print(course_id.values[0])
+      return f"https://pomonastudents.org/courses/{course_id.values[0]}"
 
 if __name__ == '__main__':
     app.run(debug=True)
