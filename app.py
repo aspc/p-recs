@@ -63,7 +63,7 @@ def getvalue():
 									 course_area= course_area,
 									 campus_list= campus_list, selected_days=selected_days)
         
-		df['link'] = df.apply(lambda x: get_links(x['Name'], x['Campus']), axis=1)
+		df['link'] = df.apply(lambda x: get_links(x['CourseCode']), axis=1)
 		filters = get_filters(course_area, campus_list, selected_days)
 		return render_template('result.html', tables = df, query = query, current_semester = current_semester, is_empty = df.empty, filters=filters)
         
@@ -73,12 +73,9 @@ def getvalue():
 		return render_template('index.html',  error = error)
 
 
-def get_links(name, campus):
-      campus = list(campus)[0][:2]
-      print(campus, name)
-      course_id = courses.loc[(courses['Name'] == name) & (courses['Campus']== campus)]['Id']
+def get_links(code):
+      course_id = courses.loc[(courses['Code'] == code[:-3])]['Id']
       if len(course_id) == 0:  return None
-      print(course_id.values[0])
       return f"https://pomonastudents.org/courses/{course_id.values[0]}"
 
 if __name__ == '__main__':
