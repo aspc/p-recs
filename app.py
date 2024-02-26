@@ -44,8 +44,8 @@ def index():
     return render_template('index.html', current_semester = current_semester) 
 
 
-import pandas as pd
-courses = pd.read_csv('data/courses-2024.csv')
+# load course data
+aspc_courses_ids = pd.read_csv('data/courses-2024.csv')
 
 @app.route('/rec',methods=['POST'])
 @limiter.limit("50 per day") # can modify this if needed
@@ -63,7 +63,8 @@ def getvalue():
 									 course_area= course_area,
 									 campus_list= campus_list, selected_days=selected_days)
         
-		df['link'] = df.apply(lambda x: get_links(x['CourseCode']), axis=1)
+		# add link to rec course reviews df
+		df['link'] = df.apply(lambda x: get_course_review_link(x['CourseCode']), axis=1)
 		filters = get_filters(course_area, campus_list, selected_days)
 		return render_template('result.html', tables = df, query = query, current_semester = current_semester, is_empty = df.empty, filters=filters)
         
@@ -73,8 +74,8 @@ def getvalue():
 		return render_template('index.html',  error = error)
 
 
-def get_links(code):
-      course_id = courses.loc[(courses['Code'] == code[:-3])]['Id']
+def get_course_review_link(code):
+      course_id = aspc_courses_ids.loc[(aspc_courses_ids['Code'] == code[:-3])]['Id']
       if len(course_id) == 0:  return None
       return f"https://pomonastudents.org/courses/{course_id.values[0]}"
 
