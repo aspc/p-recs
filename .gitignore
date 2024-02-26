@@ -5,3 +5,4 @@ keys.py
 decrypted*
 all_courses.csv
 courses.csv
+env_var.sh
