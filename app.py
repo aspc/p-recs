@@ -46,6 +46,10 @@ clean_course_info(vector_courses)
 def index():
     return render_template('index.html', current_semester = current_semester) 
 
+
+# load course data
+aspc_courses_ids = pd.read_csv('data/courses-2024.csv')
+
 @app.route('/rec',methods=['POST'])
 @limiter.limit("50 per day") # can modify this if needed
 def getvalue():
@@ -61,15 +65,22 @@ def getvalue():
 		df = recommend_courses(query, courses_df = vector_courses,
 									 course_area= course_area,
 									 campus_list= campus_list, selected_days=selected_days)
-  
+        
+		# add link to rec course reviews df
+		df['link'] = df.apply(lambda x: get_course_review_link(x['CourseCode']), axis=1)
 		filters = get_filters(course_area, campus_list, selected_days)
-
 		return render_template('result.html', tables = df, query = query, current_semester = current_semester, is_empty = df.empty, filters=filters)
         
 	except Exception as e:
 		traceback.print_exc()  # Print the error traceback
 		error = "We are temporarily unable to process your request. Please contact product@aspc.pomona.edu."
-		return render_template('index.html',  error = error) 
+		return render_template('index.html',  error = error)
+
+
+def get_course_review_link(code):
+      course_id = aspc_courses_ids.loc[(aspc_courses_ids['Code'] == code[:-3])]['Id']
+      if len(course_id) == 0:  return None
+      return f"https://pomonastudents.org/courses/{course_id.values[0]}"
 
 if __name__ == '__main__':
     app.run(debug=True)

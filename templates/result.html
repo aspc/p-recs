@@ -63,6 +63,10 @@
                 </button>
                 <!-- <h4>{{ table[2].title }}</h4> -->
                 <div class="content">
+                    {% if table['link'] is not none %}
+                        <a href="{{ table['link'] }}" target="_blank">Course Reviews</a>
+                    {% endif %}
+                    <hr style="margin: 10px 0">
                     <p class="uppercase-title">Description</p>
                     <p>{{ table['Description'] }}</p>
                     <hr style="margin: 10px 0">
