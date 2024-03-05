@@ -14,6 +14,11 @@ from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
 
+# set to correct semester
+current_semester = '2024;SP'
+
+# set current semester in app.py
+term = current_semester.replace(';', '') # use correct term (2023FA for fall 2023)
 
 # limits the number of requests by a single user per day
 limiter = Limiter(
@@ -27,14 +32,12 @@ limiter = Limiter(
 def ratelimit_handler(e):
     error = "Too many requests. Please try again soon."
     return render_template('index.html',  error = error) 
-
-current_semester = '2023;FA'
   
 # decrypt_files
-for file_name in ['data/encrypted_vectors_SP24_courses.pkl']:
+for file_name in [f'data/encrypted_vectors_{term}_courses.pkl']:
     decrypt_file(file_name)
     
-vector_courses = pd.read_pickle("data/decrypted_vectors_SP24_courses.pkl")
+vector_courses = pd.read_pickle(f"data/decrypted_vectors_{term}_courses.pkl")
 
 # modify course data (note: could be done before encryption)
 clean_course_info(vector_courses)
