@@ -110,14 +110,14 @@ def get_embedding(list_str):
     embedding_list = []
 
     # Embed a line of text
-    response = openai.Embedding.create(
-        model= "text-embedding-ada-002",
-        input = list_str
-    )
-    
-    # Extract the AI output embedding as a list of floats
-    for n in range(len(list_str)):
-        nth_word = response["data"][n]['embedding']
+    for str in list_str:
+        # Embed a line of text
+        response = openai.Embedding.create(
+            model= "text-embedding-ada-002",
+            input = str
+        )
+        # Extract the AI output embedding as a list of floats
+        nth_word = response.data[0]['embedding']
         embedding_list.append(nth_word)
     
     return embedding_list
