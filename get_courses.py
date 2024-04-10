@@ -149,7 +149,7 @@ def create_vector_file(all_courses: pd.DataFrame) -> pd.DataFrame:
 # converters ensure Faculty, Campus, MeetTime, Weekdays are lists, not a string of a list
 # try decrypted_courses_sp24.csv if all_courses.csv fails
 
-df = pd.read_csv('data/all_courses.csv', converters={'Faculty': literal_eval, 'Campus': literal_eval, 'MeetTime': literal_eval, 'Weekdays': literal_eval})
+df = pd.read_csv('decrypted_all_courses.csv', converters={'Faculty': literal_eval, 'Campus': literal_eval, 'MeetTime': literal_eval, 'Weekdays': literal_eval})
 
 vector_df = create_vector_file(df)
 

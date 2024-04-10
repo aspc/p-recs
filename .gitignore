@@ -6,4 +6,5 @@ decrypted*
 all_courses.csv
 courses.csv
 env_var.sh
+data/vectors_2024FA_courses.pkl
 
