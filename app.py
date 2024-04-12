@@ -15,7 +15,7 @@ from flask_limiter.util import get_remote_address
 app = Flask(__name__)
 
 # set to correct semester
-current_semester = '2024;SP'
+current_semester = '2024;FA'
 
 # set current semester in app.py
 term = current_semester.replace(';', '') # use correct term (2023FA for fall 2023)
