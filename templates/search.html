@@ -1,3 +1,40 @@
+<!-- The Modal -->
+<div class="modal" id="aboutModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">p-recs
+        <img src="/static/p-ai.png" alt="Pai" style="width:30px;height:30px;">
+        </h4>
+        
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        p-recs is a powerful course recommendation tool designed specifically for students at the 5C colleges - Pomona, Claremont McKenna, Scripps, Pitzer, and Harvey Mudd. Utilizing advanced natural language processing from OpenAI and a Flask web framework, p-recs helps take the guesswork out of finding courses that match your interests and needs.<br/><br/>
+
+The system works by allowing you to enter a natural language description of the type of course you're looking for, such as "an introductory computer science class focused on Python" or "a literature course analyzing modern American fiction." p-recs then uses word embedding models to identify the courses with the most similar topics and content to your search.<br/><br/>
+
+For each search, p-recs returns the top 10 most relevant course results across the 5C curriculum. The listings provide detailed course information including descriptions, prerequisites, professors, as well as similarity match scores and reviews from previous students to help you evaluate the options.<br/><br/>
+
+To further refine your searches, p-recs offers filtering capabilities by academic department, days of the week the course is offered, and even by specific colleges. 
+Another useful feature is the ability to favorite courses you're interested in with just a click. This allows you to easily compile and compare potential classes as you plan your upcoming semesters.<br/><br/>
+
+With its user-friendly interface and intelligent recommendations, p-recs takes the hassle out of course selection so you can build an ideal schedule while exploring new academic topics that genuinely excite you. Make p-recs your personal course advisor at the 5Cs!
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 <div style="display: flex; justify-content: center; align-items: center;">
     <a href="https://pomonastudents.org/">
         <img src="/static/aspc.png" alt="aspc" style="width: 85px; height: auto; margin-top: 4px;">
@@ -10,7 +47,13 @@
     </a>
 </div>
 
-<p style="margin-bottom: 4px">Discover your next class with p-recs! Simply type your interests, major or learning style and find the most relevant courses for you.</p>
+<p style="margin-bottom: 4px">Discover your next class with p-recs! Simply type your interests, major or learning style and find the most relevant courses for you. 
+  <a href="#" data-toggle="modal" data-target="#aboutModal" role="button">
+  Click to learn more. 
+  </a>
+</p>
+
+
 
 <hr />
 
